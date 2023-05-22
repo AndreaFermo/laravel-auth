@@ -12,14 +12,13 @@
       </tr>
     </thead>
     <tbody>
-        @foreach ($posts as $post)
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                
-            </tr>
-        @endforeach
+      @foreach ($projects as $project)
+          <tr>
+            <td>{{$project->id}}</td>
+            <td>{{$project->title}}</td>
+            <td>{{$project->description}}</td> 
+          </tr>
+      @endforeach
     </tbody>
   </table>
 
