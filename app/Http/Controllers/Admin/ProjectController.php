@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProjectRequest;
+use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 
 class ProjectController extends Controller
@@ -78,9 +79,19 @@ class ProjectController extends Controller
      * @param  \App\Models\Project  $project
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project)
     {
-        //
+        $validated_data = $request->validated();
+        $validated_data['slug'] = Project::generateSlug($request->title);
+
+        $checkProject = Project::where('slug', $validated_data['slug'])->first();
+        if ($checkProject) {
+            return back()->withInput()->withErrors(['slug' => 'Titolo giá in uso']);
+        }
+
+        $project->update($validated_data);
+
+        return redirect()->route('admin.projects.show', ['project' => $project->slug])->with('status', 'Progetto aggiornato!');
     }
 
     /**
