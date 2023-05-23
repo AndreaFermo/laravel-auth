@@ -16,7 +16,7 @@ class Project extends Model
         'slug'
     ];
 
-    public static function createSlug(string $title) {
-        return Str::slug('title', '-');
+    public static function generateSlug(string $title) {
+        return Str::slug($title, '-');
     }
 }

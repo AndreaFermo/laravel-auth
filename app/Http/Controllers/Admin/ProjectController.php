@@ -37,7 +37,7 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $validated_data = $request->validated();
-        $validated_data['slug'] = Project::createSlug($request->title);
+        $validated_data['slug'] = Project::generateSlug($request->title);
 
         $checkProject = Project::where('slug', $validated_data['slug'])->first();
         if ($checkProject) {
@@ -68,7 +68,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        //
+        return view('admin.projects.edit', compact('project'));
     }
 
     /**
