@@ -84,7 +84,7 @@ class ProjectController extends Controller
         $validated_data = $request->validated();
         $validated_data['slug'] = Project::generateSlug($request->title);
 
-        $checkProject = Project::where('slug', $validated_data['slug'])->first();
+        $checkProject = Project::where('slug', $validated_data['slug'])->where('id', '<>', $project->id)->first();
         if ($checkProject) {
             return back()->withInput()->withErrors(['slug' => 'Titolo giá in uso']);
         }
