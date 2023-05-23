@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProjectRequest;
 use App\Models\Project;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
@@ -25,7 +25,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.projects.create');
     }
 
     /**
@@ -34,9 +34,19 @@ class ProjectController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreProjectRequest $request)
     {
-        //
+        $validated_data = $request->validated();
+        $validated_data['slug'] = Project::createSlug($request->title);
+
+        $checkProject = Project::where('slug', $validated_data['slug'])->first();
+        if ($checkProject) {
+            return back()->withInput()->withErrors(['slug' => 'Titolo giá in uso']);
+        }
+
+        $newProject = Project::create($validated_data);
+
+        return redirect()->route('admin.projects.show', ['project' => $newProject->slug])->with('status', 'Nuovo progetto creato!');
     }
 
     /**

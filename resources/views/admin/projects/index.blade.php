@@ -18,8 +18,12 @@
             <td>{{$project->id}}</td>
             <td>{{$project->title}}</td>
             <td>{{$project->description}}</td>
-            <td>
-              <a class="btn btn-primary" href="{{route('admin.projects.show', $project->slug)}}">Mostra</a>  
+            <td class="d-flex">
+              <a class="btn btn-primary" href="{{route('admin.projects.show', $project->slug)}}">Mostra</a>
+              <a class="btn btn-warning" href="#">Modifica</a>
+              <form action="" class="btn btn-danger">
+                  Cancella
+              </form>  
             </td> 
           </tr>
       @endforeach

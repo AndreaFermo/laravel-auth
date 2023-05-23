@@ -18,5 +18,14 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="{{route('admin.projects.create')}}" class="nav-link {{ (request()->is('admin/projects/create')) ? 'active' : '' }}">
+                <svg class="bi pe-none me-2" width="16" height="16">
+                    <use xlink:href="#home"></use>
+                </svg>
+                Nuovo Progetto
+            </a>
+        </li>
+
     </ul>
 </div>
